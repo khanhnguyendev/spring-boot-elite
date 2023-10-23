@@ -1,7 +1,7 @@
 pipeline {
     agent { label 'Jenkins-Agent' }
 
-    tool {
+    tools {
         jdk 'Java17'
         gradle 'Gradle-8.4'
     }

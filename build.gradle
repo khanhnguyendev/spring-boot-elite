@@ -1,0 +1,41 @@
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version "${spring_boot_version}"
+	id 'io.spring.dependency-management' version "${spring_dependency_version}"
+}
+
+configure(subprojects.findAll()) {
+	apply plugin: 'java'
+	apply plugin: 'io.spring.dependency-management'
+
+	group = 'me.khanhnguyen'
+	version = '0.0.1-SNAPSHOT'
+	sourceCompatibility = '17'
+
+	ext['log4j2.version'] = "${logging_version}"
+
+	configurations {
+		compileOnly {
+			extendsFrom annotationProcessor
+		}
+		compile.exclude module: 'spring-boot-starter-logging'
+	}
+
+	repositories {
+		mavenCentral()
+	}
+
+	dependencyManagement {
+		imports {
+			mavenBom("org.springframework.boot:spring-boot-dependencies:${spring_boot_version}")
+		}
+	}
+
+	dependencies {
+		implementation(platform("org.apache.logging.log4j:log4j-bom:${logging_version}"))
+	}
+
+	tasks.named('test') {
+		useJUnitPlatform()
+	}
+}

@@ -1,0 +1,4 @@
+rootProject.name = 'spring-boot-elite'
+
+include "main-service"
+include "common"

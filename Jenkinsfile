@@ -3,7 +3,7 @@ pipeline {
 
     tool {
         jdk 'Java17'
-        maven 'Gradle-8.4'
+        gradle 'Gradle-8.4'
     }
 
     stages {

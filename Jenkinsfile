@@ -9,9 +9,8 @@ pipeline {
     environment {
         APP_NAME = "spring-boot-elite-pipeline"
         RELEASE = "1.0.0"
-        DOCKER_USER = "ngokhanhnguyen97"
-        DOCKER_PASS = 'dockerhub'
-        IMAGE_NAME = "${DOCKER_USER}" + "/" + "${APP_NAME}"
+        DOCKERHUB_CREDENTIALS = credentials('dockerhub')
+        IMAGE_NAME = "ngokhanhnguyen97" + "/" + "spring-boot-elite"
         IMAGE_TAG = "${RELEASE}-${BUILD_NUMBER}"
     }
 
@@ -31,6 +30,12 @@ pipeline {
         stage("Build Application") {
             steps {
                 sh "./gradlew main-service:build"
+            }
+        }
+
+        stage("Login to Dockerhub") {
+            steps {
+                sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
             }
         }
 
